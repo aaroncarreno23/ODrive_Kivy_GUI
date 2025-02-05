@@ -1,3 +1,25 @@
+""" After you have tested each example, l
+et us finish by making a Kivy GUI. You will find template
+files in the KivyTemplate folder of this repository. Your goal
+with this GUI is to have the following –
+
+A button that toggles between moving the motor 5
+rotations clockwise and counterclockwise
+
+A slider that controls the velocity of the motor
+A second slider that controls the acceleration of the
+motor (i.e. two sliders to handle ramped velocity)
+
+Consider changing your velocity slider to use ramped velocity and
+retrieve the acceleration value from the second slider.
+
+Another screen that controls the motor with trapezoidal trajectory
+control. Have text boxes for acceleration, target position, and
+deceleration plus a submit button to send the command to the motor.
+
+Another screen which utilizes a GPIO pin to move the motor when a
+sensor or switch is activated."""
+
 import os
 import sys
 
@@ -7,7 +29,7 @@ import sys
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import ScreenManager, Screen, FallOutTransition, SlideTransition
 
 from pidev.MixPanel import MixPanel
 from pidev.kivy.PassCodeScreen import PassCodeScreen
@@ -25,6 +47,8 @@ MAIN_SCREEN_NAME = 'main'
 TRAJ_SCREEN_NAME = 'traj'
 GPIO_SCREEN_NAME = 'gpio'
 ADMIN_SCREEN_NAME = 'admin'
+SETTINGS_SCREEN_NAME = 'settings'
+SPEED_SCREEN_NAME = 'speed'
 
 
 class ProjectNameGUI(App):
@@ -47,14 +71,32 @@ class MainScreen(Screen):
     """
     Class to handle the main screen and its associated touch events
     """
+    def __init__(self, **kwargs):
+        super(MainScreen, self).__init__(**kwargs)
+        self.direction_CW = False
 
-    def switch_to_traj(self):
-        SCREEN_MANAGER.transition.direction = "left"
-        SCREEN_MANAGER.current = TRAJ_SCREEN_NAME
 
-    def switch_to_gpio(self):
-        SCREEN_MANAGER.transition.direction = "right"
-        SCREEN_MANAGER.current = GPIO_SCREEN_NAME
+    def change_direction(self):
+        if self.direction_CW:
+            self.ids.rotation_direction.text = "ClockWise"
+            self.direction_CW = False
+            print("CW")
+
+        else:
+            self.ids.rotation_direction.text = "Counter ClockWise"
+            self.direction_CW = True
+            print("CC")
+
+    def five_rotations(self):
+        pass
+
+    def switch_to_settings(self):
+        SCREEN_MANAGER.transition = SlideTransition(direction='left')
+        SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
+
+    def switch_to_admin(self):
+        SCREEN_MANAGER.transition = FallOutTransition()
+        SCREEN_MANAGER.current = ADMIN_SCREEN_NAME
 
 
     def admin_action(self):
@@ -72,7 +114,7 @@ class TrajectoryScreen(Screen):
     """
 
     def switch_screen(self):
-        SCREEN_MANAGER.transition.direction = "right"
+        SCREEN_MANAGER.transition = SlideTransition(direction='right')
         SCREEN_MANAGER.current = MAIN_SCREEN_NAME
 
 
@@ -82,14 +124,45 @@ class GPIOScreen(Screen):
     """
 
     def switch_screen(self):
-        SCREEN_MANAGER.transition.direction = "left"
+        SCREEN_MANAGER.transition = SlideTransition(direction='right')
         SCREEN_MANAGER.current = MAIN_SCREEN_NAME
 
+class SpeedScreen(Screen):
+
+    def switch_to_settings(self):
+        SCREEN_MANAGER.transition = SlideTransition(direction='left')
+        SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
+
+
+class SettingsScreen(Screen):
+
+    def switch_to_main(self):
+        SCREEN_MANAGER.transition = SlideTransition(direction='right')
+        SCREEN_MANAGER.current = MAIN_SCREEN_NAME
+
+    def switch_to_gpio(self):
+        SCREEN_MANAGER.transition = SlideTransition(direction='left')
+        SCREEN_MANAGER.current = GPIO_SCREEN_NAME
+
+    def switch_to_traj(self):
+        SCREEN_MANAGER.transition = SlideTransition(direction='left')
+        SCREEN_MANAGER.current = TRAJ_SCREEN_NAME
+
+    def switch_to_speed(self):
+        SCREEN_MANAGER.transition = SlideTransition(direction='left')
+        SCREEN_MANAGER.current = SPEED_SCREEN_NAME
 
 class AdminScreen(Screen):
     """
     Class to handle the AdminScreen and its functionality
     """
+    def switch_to_main(self):
+        SCREEN_MANAGER.transition = FallOutTransition()
+        SCREEN_MANAGER.current = MAIN_SCREEN_NAME
+
+
+
+
 
     def __init__(self, **kwargs):
         """
@@ -136,9 +209,20 @@ Widget additions
 """
 
 Builder.load_file('main.kv')
+print("Loaded main.kv")
+Builder.load_file('SettingsScreen.kv')
+print("Loaded SettingsScreen.kv")
+Builder.load_file('GPIOScreen.kv')
+print("Loaded GPIOScreen.kv")
+Builder.load_file('TrajectoryScreen.kv')
+print("Loaded TrajectoryScreen.kv")
+Builder.load_file('SpeedScreen.kv')
+print("Loaded SpeedScreen.kv")
 SCREEN_MANAGER.add_widget(MainScreen(name=MAIN_SCREEN_NAME))
 SCREEN_MANAGER.add_widget(TrajectoryScreen(name=TRAJ_SCREEN_NAME))
 SCREEN_MANAGER.add_widget(GPIOScreen(name=GPIO_SCREEN_NAME))
+SCREEN_MANAGER.add_widget(SettingsScreen(name=SETTINGS_SCREEN_NAME))
+SCREEN_MANAGER.add_widget(SettingsScreen(name=SPEED_SCREEN_NAME))
 SCREEN_MANAGER.add_widget(PassCodeScreen(name='passCode'))
 SCREEN_MANAGER.add_widget(PauseScreen(name='pauseScene'))
 SCREEN_MANAGER.add_widget(AdminScreen(name=ADMIN_SCREEN_NAME))
