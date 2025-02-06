@@ -7,5 +7,8 @@
         color: 0.7, 0.75, 0.78, 1
         size_hint: None, None
         size: 150, 100
+        center_x: root.width *0.5
+        y: root.height * 0.2
         font_size: 20
         text: "Go Back"
+        on_press: root.switch_to_settings()

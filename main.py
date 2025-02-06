@@ -48,7 +48,7 @@ TRAJ_SCREEN_NAME = 'traj'
 GPIO_SCREEN_NAME = 'gpio'
 ADMIN_SCREEN_NAME = 'admin'
 SETTINGS_SCREEN_NAME = 'settings'
-SPEED_SCREEN_NAME = 'speed'
+RATE_SCREEN_NAME = 'rate'
 
 
 class ProjectNameGUI(App):
@@ -113,9 +113,9 @@ class TrajectoryScreen(Screen):
     Class to handle the trajectory control screen and its associated touch events
     """
 
-    def switch_screen(self):
+    def switch_screen_settings(self):
         SCREEN_MANAGER.transition = SlideTransition(direction='right')
-        SCREEN_MANAGER.current = MAIN_SCREEN_NAME
+        SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
 
 
 class GPIOScreen(Screen):
@@ -123,14 +123,8 @@ class GPIOScreen(Screen):
     Class to handle the GPIO screen and its associated touch/listening events
     """
 
-    def switch_screen(self):
+    def switch_screen_settings(self):
         SCREEN_MANAGER.transition = SlideTransition(direction='right')
-        SCREEN_MANAGER.current = MAIN_SCREEN_NAME
-
-class SpeedScreen(Screen):
-
-    def switch_to_settings(self):
-        SCREEN_MANAGER.transition = SlideTransition(direction='left')
         SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
 
 
@@ -148,9 +142,15 @@ class SettingsScreen(Screen):
         SCREEN_MANAGER.transition = SlideTransition(direction='left')
         SCREEN_MANAGER.current = TRAJ_SCREEN_NAME
 
-    def switch_to_speed(self):
+    def switch_to_rate(self):
         SCREEN_MANAGER.transition = SlideTransition(direction='left')
-        SCREEN_MANAGER.current = SPEED_SCREEN_NAME
+        SCREEN_MANAGER.current = RATE_SCREEN_NAME
+
+class RateScreen(Screen):
+
+    def switch_to_settings(self):
+        SCREEN_MANAGER.transition = SlideTransition(direction='right')
+        SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
 
 class AdminScreen(Screen):
     """
@@ -216,13 +216,13 @@ Builder.load_file('GPIOScreen.kv')
 print("Loaded GPIOScreen.kv")
 Builder.load_file('TrajectoryScreen.kv')
 print("Loaded TrajectoryScreen.kv")
-Builder.load_file('SpeedScreen.kv')
-print("Loaded SpeedScreen.kv")
+Builder.load_file('RateScreen.kv')
+print("Loaded RateScreen.kv")
 SCREEN_MANAGER.add_widget(MainScreen(name=MAIN_SCREEN_NAME))
 SCREEN_MANAGER.add_widget(TrajectoryScreen(name=TRAJ_SCREEN_NAME))
 SCREEN_MANAGER.add_widget(GPIOScreen(name=GPIO_SCREEN_NAME))
 SCREEN_MANAGER.add_widget(SettingsScreen(name=SETTINGS_SCREEN_NAME))
-SCREEN_MANAGER.add_widget(SettingsScreen(name=SPEED_SCREEN_NAME))
+SCREEN_MANAGER.add_widget(RateScreen(name=RATE_SCREEN_NAME))
 SCREEN_MANAGER.add_widget(PassCodeScreen(name='passCode'))
 SCREEN_MANAGER.add_widget(PauseScreen(name='pauseScene'))
 SCREEN_MANAGER.add_widget(AdminScreen(name=ADMIN_SCREEN_NAME))

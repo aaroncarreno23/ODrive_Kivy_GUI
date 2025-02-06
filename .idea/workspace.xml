@@ -5,14 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac473148-95d0-4da3-a557-ae3e59dbb374" name="Changes" comment="adding KivyTemplate">
-      <change afterPath="$PROJECT_DIR$/GPIOScreen.kv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SettingsScreen.kv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SpeedScreen.kv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TrajectoryScreen.kv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AdminScreen.kv" beforeDir="false" afterPath="$PROJECT_DIR$/AdminScreen.kv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.kv" beforeDir="false" afterPath="$PROJECT_DIR$/main.kv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +68,7 @@
       <updated>1738703399811</updated>
       <workItem from="1738703400880" duration="74000" />
       <workItem from="1738780357913" duration="5824000" />
-      <workItem from="1738788655413" duration="3360000" />
+      <workItem from="1738788655413" duration="4746000" />
     </task>
     <task id="LOCAL-00001" summary="adding KivyTemplate">
       <option name="closed" value="true" />
@@ -86,7 +78,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738781301533</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="adding KivyTemplate">
+      <option name="closed" value="true" />
+      <created>1738793278478</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1738793278478</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -97,6 +97,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="adding KivyTemplate" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ODrive_Kivy_GUI$main.coverage" NAME="main Coverage Results" MODIFIED="1738792014667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ODrive_Kivy_GUI$main.coverage" NAME="main Coverage Results" MODIFIED="1738793136049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
