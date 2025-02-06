@@ -37,8 +37,26 @@ from pidev.kivy.PauseScreen import PauseScreen
 from pidev.kivy import DPEAButton
 from pidev.kivy import ImageButton
 
+import time
+
 sys.path.append("/home/soft-dev/Documents/dpea-odrive/")
 from dpea_odrive.odrive_helpers import *
+od = find_odrive("207935A1524B")
+assert od.config.enable_brake_resistor is True, 'Check for faulty brake resistor'
+print(dir(od.config))
+ax = ODriveAxis(od.axis0)
+ax = ODriveAxis(od.axis1)
+print("Axis 0 state:", od.axis0.current_state)
+print("Axis 1 state:", od.axis1.current_state)
+
+if not ax.is_calibrated():
+    print('calibrating...')
+    ax.calibrate_with_current_lim(10)
+
+print("Current Limit:", ax.get_current_limit())
+print("Velocity Limit:", ax.get_current_limit())
+dump_errors(od)
+
 MIXPANEL_TOKEN = "x"
 MIXPANEL = MixPanel("Project Name", MIXPANEL_TOKEN)
 
@@ -50,6 +68,8 @@ ADMIN_SCREEN_NAME = 'admin'
 SETTINGS_SCREEN_NAME = 'settings'
 RATE_SCREEN_NAME = 'rate'
 
+velocity_value = 0
+acceleration_value = 0
 
 class ProjectNameGUI(App):
     """
@@ -63,9 +83,7 @@ class ProjectNameGUI(App):
         """
         return SCREEN_MANAGER
 
-
 Window.clearcolor = (1, 1, 1, 1)  # White
-
 
 class MainScreen(Screen):
     """
@@ -75,20 +93,30 @@ class MainScreen(Screen):
         super(MainScreen, self).__init__(**kwargs)
         self.direction_CW = False
 
-
     def change_direction(self):
         if self.direction_CW:
-            self.ids.rotation_direction.text = "ClockWise"
             self.direction_CW = False
-            print("CW")
+            self.ids.rotation_direction.text = "Counter ClockWise"
+            print("CCW")
 
         else:
-            self.ids.rotation_direction.text = "Counter ClockWise"
             self.direction_CW = True
-            print("CC")
+            self.ids.rotation_direction.text = "ClockWise"
+            print("CW")
 
     def five_rotations(self):
-        pass
+
+        if self.direction_CW:
+            ax.set_relative_pos(5)  # 5 turns in positive direction, 5 turns from current position
+            ax.wait_for_motor_to_stop()  # waits for motor to stop before continuing next commands
+            print("Current Position in Turns = ", round(ax.get_pos(), 2))
+            print("5 Revolutions CW")
+
+        else:
+             ax.set_relative_pos(-5)  # 5 turns in the negative direction
+             ax.wait_for_motor_to_stop()
+             print("Current Position in Turns = ", round(ax.get_pos(), 2))
+             print("5 Revolutions CCW")
 
     def switch_to_settings(self):
         SCREEN_MANAGER.transition = SlideTransition(direction='left')
@@ -98,7 +126,6 @@ class MainScreen(Screen):
         SCREEN_MANAGER.transition = FallOutTransition()
         SCREEN_MANAGER.current = ADMIN_SCREEN_NAME
 
-
     def admin_action(self):
         """
         Hidden admin button touch event. Transitions to passCodeScreen.
@@ -106,7 +133,6 @@ class MainScreen(Screen):
         :return: None
         """
         SCREEN_MANAGER.current = 'passCode'
-
 
 class TrajectoryScreen(Screen):
     """
@@ -117,7 +143,6 @@ class TrajectoryScreen(Screen):
         SCREEN_MANAGER.transition = SlideTransition(direction='right')
         SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
 
-
 class GPIOScreen(Screen):
     """
     Class to handle the GPIO screen and its associated touch/listening events
@@ -126,7 +151,6 @@ class GPIOScreen(Screen):
     def switch_screen_settings(self):
         SCREEN_MANAGER.transition = SlideTransition(direction='right')
         SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
-
 
 class SettingsScreen(Screen):
 
@@ -152,6 +176,18 @@ class RateScreen(Screen):
         SCREEN_MANAGER.transition = SlideTransition(direction='right')
         SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
 
+    def velocity(self, slider, value):
+        global velocity_value
+        velocity_value = value
+        ax.set_vel_limit(value)
+        self.ids.velocity_label.text = f"Velocity {int(value)} turns per second"
+        print(f"Velocity {int(value)} turns per second")
+
+    def acceleration(self, slider, value):
+        ax.set_ramped_vel(velocity_value, value)
+        self.ids.acceleration_label.text = f"Acceleration {int(value)}"
+        print(f"Acceleration: {int(value)}")
+
 class AdminScreen(Screen):
     """
     Class to handle the AdminScreen and its functionality
@@ -159,10 +195,6 @@ class AdminScreen(Screen):
     def switch_to_main(self):
         SCREEN_MANAGER.transition = FallOutTransition()
         SCREEN_MANAGER.current = MAIN_SCREEN_NAME
-
-
-
-
 
     def __init__(self, **kwargs):
         """
@@ -203,7 +235,6 @@ class AdminScreen(Screen):
         """
         quit()
 
-
 """
 Widget additions
 """
@@ -231,7 +262,6 @@ SCREEN_MANAGER.add_widget(AdminScreen(name=ADMIN_SCREEN_NAME))
 MixPanel
 """
 
-
 def send_event(event_name):
     """
     Send an event to MixPanel without properties
@@ -242,7 +272,6 @@ def send_event(event_name):
 
     MIXPANEL.set_event_name(event_name)
     MIXPANEL.send_event()
-
 
 if __name__ == "__main__":
     # send_event("Project Initialized")

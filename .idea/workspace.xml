@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac473148-95d0-4da3-a557-ae3e59dbb374" name="Changes" comment="adding KivyTemplate">
+    <list default="true" id="ac473148-95d0-4da3-a557-ae3e59dbb374" name="Changes" comment="adding KivyTemplate, completing screen/button layout">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RateScreen.kv" beforeDir="false" afterPath="$PROJECT_DIR$/RateScreen.kv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,6 +71,8 @@
       <workItem from="1738703400880" duration="74000" />
       <workItem from="1738780357913" duration="5824000" />
       <workItem from="1738788655413" duration="4746000" />
+      <workItem from="1738868052736" duration="4550000" />
+      <workItem from="1738875151432" duration="844000" />
     </task>
     <task id="LOCAL-00001" summary="adding KivyTemplate">
       <option name="closed" value="true" />
@@ -86,7 +90,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738793278478</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="adding KivyTemplate, completing screen/button layout">
+      <option name="closed" value="true" />
+      <created>1738869013540</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1738869013540</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,9 +106,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="adding KivyTemplate" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding KivyTemplate" />
+    <MESSAGE value="adding KivyTemplate, completing screen/button layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding KivyTemplate, completing screen/button layout" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ODrive_Kivy_GUI$main.coverage" NAME="main Coverage Results" MODIFIED="1738793136049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ODrive_Kivy_GUI$main.coverage" NAME="main Coverage Results" MODIFIED="1738875238910" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
