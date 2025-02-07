@@ -23,6 +23,8 @@ sensor or switch is activated."""
 import os
 import sys
 
+from IPython.utils.wildcard import dict_dir
+from aptdaemon.policykit1 import get_pid_from_dbus_name
 # os.environ['DISPLAY'] = ":0.0"
 # os.environ['KIVY_WINDOW'] = 'egl_rpi'
 
@@ -36,17 +38,18 @@ from pidev.kivy.PassCodeScreen import PassCodeScreen
 from pidev.kivy.PauseScreen import PauseScreen
 from pidev.kivy import DPEAButton
 from pidev.kivy import ImageButton
-
+from dpea_odrive.odrive_helpers import digital_read
 import time
 
 sys.path.append("/home/soft-dev/Documents/dpea-odrive/")
 from dpea_odrive.odrive_helpers import *
 od = find_odrive("207935A1524B")
+# 0x207935a1524b - serial number
 assert od.config.enable_brake_resistor is True, 'Check for faulty brake resistor'
 print(dir(od.config))
-ax = ODriveAxis(od.axis0)
+#ax = ODriveAxis(od.axis0)
 ax = ODriveAxis(od.axis1)
-print("Axis 0 state:", od.axis0.current_state)
+#print("Axis 0 state:", od.axis0.current_state)
 print("Axis 1 state:", od.axis1.current_state)
 
 if not ax.is_calibrated():
@@ -70,6 +73,22 @@ RATE_SCREEN_NAME = 'rate'
 
 velocity_value = 0
 acceleration_value = 0
+pin_num = 2
+#digital_read(od, pin_num)
+#NOT TOUCHING SWITCH IS 1 AND TOUCHING SWITCH IS 0
+
+#ax.set_vel_limit(1)
+#ax.set_relative_pos(5)
+#ax.wait_for_motor_to_stop()
+#print("Current Position in Turns = ", round(ax.get_pos(), 2))
+
+#ax.set_relative_pos(-1)
+#ax.wait_for_motor_to_stop()
+
+#13 revolutions from one end to the other
+# negative for toward switch, positive for away from switch
+
+#TRY TO MAKE IF IT RAN 13 NEGATIVE THE NEXT 13 ARE POSITIVE TO PREVENT CRASHING
 
 class ProjectNameGUI(App):
     """
@@ -107,16 +126,16 @@ class MainScreen(Screen):
     def five_rotations(self):
 
         if self.direction_CW:
-            ax.set_relative_pos(5)  # 5 turns in positive direction, 5 turns from current position
+            ax.set_relative_pos(1)  # 5 turns in positive direction, 5 turns from current position
             ax.wait_for_motor_to_stop()  # waits for motor to stop before continuing next commands
             print("Current Position in Turns = ", round(ax.get_pos(), 2))
-            print("5 Revolutions CW")
+
 
         else:
-             ax.set_relative_pos(-5)  # 5 turns in the negative direction
+             ax.set_relative_pos(-1)  # 5 turns in the negative direction
              ax.wait_for_motor_to_stop()
              print("Current Position in Turns = ", round(ax.get_pos(), 2))
-             print("5 Revolutions CCW")
+
 
     def switch_to_settings(self):
         SCREEN_MANAGER.transition = SlideTransition(direction='left')
@@ -142,6 +161,13 @@ class TrajectoryScreen(Screen):
     def switch_screen_settings(self):
         SCREEN_MANAGER.transition = SlideTransition(direction='right')
         SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
+
+    def trajectory(self, slider, value):
+        pass
+
+    #ax.set_pos_traj(5, 1, 10,1)  # position 5(turns), acceleration 1 turn/s^2, target velocity 10 turns/s, deceleration 1 turns/s^2
+    #ax.set_pos_traj(-5, 1, 10,1)  # position -5(turns), acceleration 1 turn/s^2, target velocity 10 turns/s, deceleration 1 turns/s^2
+    #ax.idle()
 
 class GPIOScreen(Screen):
     """

@@ -7,8 +7,30 @@
         color: 0.7, 0.75, 0.78, 1
         size_hint: None, None
         size: 150, 100
+        center_x: root.width *0.5
+        y: root.height * 0.2
         font_size: 20
         text: "Go Back"
-        center_x: root.width *0.5
-        y: root.height * 0.1
         on_press: root.switch_screen_settings()
+
+    Slider:
+        id: trajectory_slider
+        orientation: 'horizontal'
+        size_hint: None, None
+        size: 350, 50
+        min: 0
+        value: 5
+        step: 1
+        max: 15
+        center_x: root.width * 0.5
+        center_y: root.height * 0.5
+        #on_value: root.trajectory(self, self.value)
+
+    Label:
+        id: trajectory_label
+        size_hint: None, None
+        text: "Trajectory: 5"
+        font_size: 20
+        color: 0, 0, 0, 1
+        center_x: root.width * 0.5
+        center_y: root.height * 0.6
