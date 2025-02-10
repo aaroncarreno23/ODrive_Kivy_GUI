@@ -160,6 +160,9 @@ class MainScreen(Screen):
         SCREEN_MANAGER.current = 'passCode'
 
 class TrajectoryScreen(Screen):
+    def __init__(self, **kwargs):
+        super(TrajectoryScreen, self).__init__(**kwargs)
+        self.start_position_updates()
     """
     Class to handle the trajectory control screen and its associated touch events
     """
@@ -170,6 +173,12 @@ class TrajectoryScreen(Screen):
     def switch_screen_settings(self):
         SCREEN_MANAGER.transition = SlideTransition(direction='right')
         SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
+
+    def start_position_updates(self):
+        Clock.schedule_interval(self.update_position, 1)
+
+    def update_position(self, dt):
+        print("Current Position in Turns = ", round(ax.get_pos(), 2))
 
     def send_command(self):
         global velocity_value
@@ -182,7 +191,6 @@ class TrajectoryScreen(Screen):
             print(f"Sending command -> Target: {target}, Accel: {accel}, Velocity: {velocity_value}, Decel: {decel}")
             ax.set_pos_traj(target, accel, velocity_value, decel)  # Send command to motor
             print("Current Position in Turns = ", round(ax.get_pos(), 2))
-
 
         except ValueError:
             print("Invalid input! Please enter numerical values.")
