@@ -35,24 +35,24 @@
         center_x: root.width * 0.5
         center_y: root.height * 0.8
 
-    Slider:
-        id: acceleration_slider
-        orientation: 'horizontal'
-        size_hint: None, None
-        size: 350, 50
-        min: 0
-        value: 5
-        step: 1
-        max: 15
-        center_x: root.width * 0.5
-        center_y: root.height * 0.5
-        on_value: root.acceleration(self, self.value)
+    #Slider:
+    #    id: acceleration_slider
+    #    orientation: 'horizontal'
+    #    size_hint: None, None
+    #    size: 350, 50
+    #    min: 0
+    #    value: 5
+    #    step: 1
+    #    max: 15
+    #    center_x: root.width * 0.5
+    #    center_y: root.height * 0.5
+    #    on_value: root.acceleration(self, self.value)
 
-    Label:
-        id: acceleration_label
-        size_hint: None, None
-        text: "Acceleration: 5"
-        font_size: 20
-        color: 0, 0, 0, 1
-        center_x: root.width * 0.5
-        center_y: root.height * 0.6
+   # Label:
+   #     id: acceleration_label
+   #     size_hint: None, None
+   #     text: "Acceleration: 5"
+   #     font_size: 20
+   #     color: 0, 0, 0, 1
+   #     center_x: root.width * 0.5
+   #     center_y: root.height * 0.6

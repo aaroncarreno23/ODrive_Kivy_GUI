@@ -31,6 +31,8 @@ from aptdaemon.policykit1 import get_pid_from_dbus_name
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
+from kivy.properties import StringProperty
+from kivy.uix.textinput import TextInput
 from kivy.uix.screenmanager import ScreenManager, Screen, FallOutTransition, SlideTransition
 
 from pidev.MixPanel import MixPanel
@@ -76,6 +78,7 @@ RATE_SCREEN_NAME = 'rate'
 
 velocity_value = 0
 acceleration_value = 0
+trajectory_value = 0
 pin_num = 8
 #digital_read(od, pin_num)
 #NOT TOUCHING SWITCH IS 1 AND TOUCHING SWITCH IS 0
@@ -156,36 +159,33 @@ class MainScreen(Screen):
         """
         SCREEN_MANAGER.current = 'passCode'
 
-    def endstop(self):
-            print("Homeing...")
-            ax.home_with_endstop(1, 0, 8)
-            print("Homed")
-
-        #pin_state_before = digital_read(od, pin_num)
-        #print(pin_state_before)
-        #ax.home_with_endstop(1, 0, 8)
-        #print(ax.set_home())
-        #pin_state_after = digital_read(od, pin_num)
-        #print(pin_state_after)
-        #if pin_state_after == 0:
-        #    print("Endstop touched after homing")
-        #    ax.set_relative_pos(1)
-
-        #else:
-        #    print("Endstop untouched after homing")
-        #    ax.set_relative_pos(9)
-
 class TrajectoryScreen(Screen):
     """
     Class to handle the trajectory control screen and its associated touch events
     """
+    acceleration = StringProperty("")
+    target_position = StringProperty("")
+    deceleration = StringProperty("")
 
     def switch_screen_settings(self):
         SCREEN_MANAGER.transition = SlideTransition(direction='right')
         SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
 
-    def trajectory(self, slider, value):
-        pass
+    def send_command(self):
+        global velocity_value
+
+        try:
+            target = float(self.target_position)
+            accel = float(self.acceleration)
+            decel = float(self.deceleration)
+
+            print(f"Sending command -> Target: {target}, Accel: {accel}, Velocity: {velocity_value}, Decel: {decel}")
+            ax.set_pos_traj(target, accel, velocity_value, decel)  # Send command to motor
+            print("Current Position in Turns = ", round(ax.get_pos(), 2))
+
+
+        except ValueError:
+            print("Invalid input! Please enter numerical values.")
 
     #ax.set_pos_traj(5, 1, 10,1)  # position 5(turns), acceleration 1 turn/s^2, target velocity 10 turns/s, deceleration 1 turns/s^2
     #ax.set_pos_traj(-5, 1, 10,1)  # position -5(turns), acceleration 1 turn/s^2, target velocity 10 turns/s, deceleration 1 turns/s^2
@@ -199,6 +199,11 @@ class GPIOScreen(Screen):
     def switch_screen_settings(self):
         SCREEN_MANAGER.transition = SlideTransition(direction='right')
         SCREEN_MANAGER.current = SETTINGS_SCREEN_NAME
+
+    def endstop(self):
+            print("Homeing...")
+            ax.home_with_endstop(1, 0.01, 8)
+            print("Homed")
 
 class SettingsScreen(Screen):
 
@@ -231,10 +236,12 @@ class RateScreen(Screen):
         self.ids.velocity_label.text = f"Velocity {int(value)} turns per second"
         print(f"Velocity {int(value)} turns per second")
 
-    def acceleration(self, slider, value):
-        ax.set_ramped_vel(velocity_value, value)
-        self.ids.acceleration_label.text = f"Acceleration {int(value)}"
-        print(f"Acceleration: {int(value)}")
+    #def acceleration(self, slider, value):
+    #    global acceleration_value
+    #    acceleration_value = value
+    #    ax.set_ramped_vel(velocity_value, value)
+    #    self.ids.acceleration_label.text = f"Acceleration {int(value)}"
+    #    print(f"Acceleration: {int(value)}")
 
 class AdminScreen(Screen):
     """

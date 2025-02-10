@@ -4,6 +4,16 @@
         size_hint: None, None
 
     DPEAButton:
+        text: 'Home'
+        font_size: 20
+        size_hint: None, None
+        size: 150, 50
+        center_x: root.width*0.5
+        center_y: root.height*0.6
+        color: 0.67, 0.95, 0.54, 1
+        on_press: root.endstop()
+
+    DPEAButton:
         color: 0.7, 0.75, 0.78, 1
         size_hint: None, None
         size: 150, 100

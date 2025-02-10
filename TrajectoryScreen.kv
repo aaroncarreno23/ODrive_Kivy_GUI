@@ -8,29 +8,49 @@
         size_hint: None, None
         size: 150, 100
         center_x: root.width *0.5
-        y: root.height * 0.2
+        y: root.height * 0.1
         font_size: 20
         text: "Go Back"
         on_press: root.switch_screen_settings()
 
-    Slider:
-        id: trajectory_slider
-        orientation: 'horizontal'
+    DPEAButton:
+        color: 0.7, 0.75, 0.78, 1
         size_hint: None, None
-        size: 350, 50
-        min: 0
-        value: 5
-        step: 1
-        max: 15
-        center_x: root.width * 0.5
-        center_y: root.height * 0.5
-        #on_value: root.trajectory(self, self.value)
-
-    Label:
-        id: trajectory_label
-        size_hint: None, None
-        text: "Trajectory: 5"
+        size: 150, 100
+        center_x: root.width *0.5
+        y: root.height * 0.3
         font_size: 20
-        color: 0, 0, 0, 1
-        center_x: root.width * 0.5
-        center_y: root.height * 0.6
+        text: "Submit"
+        on_press: root.send_command()
+
+    TextInput:
+        id: text_for_acceleration
+        size_hint: None, None
+        size: 150, 75
+        center_x: root.width *0.5
+        center_y: root.height *0.6
+        hint_text: "Acceleration"
+        text: root.acceleration
+        on_text: root.acceleration = self.text
+
+    TextInput:
+        id: text_for_Deceleration
+        size_hint: None, None
+        size: 150, 75
+        center_x: root.width *0.5
+        center_y: root.height *0.75
+        hint_text: "Deceleration"
+        text: root.deceleration
+        on_text: root.deceleration = self.text
+
+    TextInput:
+        id: text_for_target_position
+        size_hint: None, None
+        size: 150, 75
+        center_x: root.width *0.5
+        center_y: root.height *0.9
+        hint_text: "Target Position"
+        text: root.target_position
+        on_text: root.target_position = self.text
+
+
