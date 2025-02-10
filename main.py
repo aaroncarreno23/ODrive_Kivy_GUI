@@ -40,6 +40,9 @@ from pidev.kivy import DPEAButton
 from pidev.kivy import ImageButton
 from dpea_odrive.odrive_helpers import digital_read
 import time
+from kivy.clock import Clock
+
+#ax.home_with_endstop(1, 0.05, 2)
 
 sys.path.append("/home/soft-dev/Documents/dpea-odrive/")
 from dpea_odrive.odrive_helpers import *
@@ -73,7 +76,7 @@ RATE_SCREEN_NAME = 'rate'
 
 velocity_value = 0
 acceleration_value = 0
-pin_num = 2
+pin_num = 8
 #digital_read(od, pin_num)
 #NOT TOUCHING SWITCH IS 1 AND TOUCHING SWITCH IS 0
 
@@ -89,6 +92,8 @@ pin_num = 2
 # negative for toward switch, positive for away from switch
 
 #TRY TO MAKE IF IT RAN 13 NEGATIVE THE NEXT 13 ARE POSITIVE TO PREVENT CRASHING
+
+#ax.home_with_endstop(vel, offset, min_gpio_num)
 
 class ProjectNameGUI(App):
     """
@@ -111,6 +116,7 @@ class MainScreen(Screen):
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
         self.direction_CW = False
+        #self.start_sensor_updates()
 
     def change_direction(self):
         if self.direction_CW:
@@ -126,16 +132,13 @@ class MainScreen(Screen):
     def five_rotations(self):
 
         if self.direction_CW:
-            ax.set_relative_pos(1)  # 5 turns in positive direction, 5 turns from current position
-            ax.wait_for_motor_to_stop()  # waits for motor to stop before continuing next commands
+            ax.set_relative_pos(1)
+            ax.wait_for_motor_to_stop()
             print("Current Position in Turns = ", round(ax.get_pos(), 2))
-
-
         else:
-             ax.set_relative_pos(-1)  # 5 turns in the negative direction
+             ax.set_relative_pos(-1)
              ax.wait_for_motor_to_stop()
              print("Current Position in Turns = ", round(ax.get_pos(), 2))
-
 
     def switch_to_settings(self):
         SCREEN_MANAGER.transition = SlideTransition(direction='left')
@@ -152,6 +155,25 @@ class MainScreen(Screen):
         :return: None
         """
         SCREEN_MANAGER.current = 'passCode'
+
+    def endstop(self):
+            print("Homeing...")
+            ax.home_with_endstop(1, 0, 8)
+            print("Homed")
+
+        #pin_state_before = digital_read(od, pin_num)
+        #print(pin_state_before)
+        #ax.home_with_endstop(1, 0, 8)
+        #print(ax.set_home())
+        #pin_state_after = digital_read(od, pin_num)
+        #print(pin_state_after)
+        #if pin_state_after == 0:
+        #    print("Endstop touched after homing")
+        #    ax.set_relative_pos(1)
+
+        #else:
+        #    print("Endstop untouched after homing")
+        #    ax.set_relative_pos(9)
 
 class TrajectoryScreen(Screen):
     """
