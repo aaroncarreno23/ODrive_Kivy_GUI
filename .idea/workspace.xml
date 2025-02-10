@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac473148-95d0-4da3-a557-ae3e59dbb374" name="Changes" comment="adding KivyTemplate, completing screen/button layout, added working functions for velocity and acceleration sliders in RateScreen" />
+    <list default="true" id="ac473148-95d0-4da3-a557-ae3e59dbb374" name="Changes" comment="adding KivyTemplate, completing screen/button layout, added working functions for velocity and acceleration sliders in RateScreen, adding code for different set of odrive motors">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.kv" beforeDir="false" afterPath="$PROJECT_DIR$/main.kv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,6 +73,10 @@
       <workItem from="1738788655413" duration="4746000" />
       <workItem from="1738868052736" duration="4550000" />
       <workItem from="1738875151432" duration="4551000" />
+      <workItem from="1738951065887" duration="8379000" />
+      <workItem from="1738962395197" duration="4129000" />
+      <workItem from="1739211150916" duration="5341000" />
+      <workItem from="1739219569704" duration="685000" />
     </task>
     <task id="LOCAL-00001" summary="adding KivyTemplate">
       <option name="closed" value="true" />
@@ -102,7 +110,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738879741810</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="adding KivyTemplate, completing screen/button layout, added working functions for velocity and acceleration sliders in RateScreen, adding code for different set of odrive motors">
+      <option name="closed" value="true" />
+      <created>1738959551576</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1738959551576</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -112,9 +128,10 @@
     <MESSAGE value="adding KivyTemplate" />
     <MESSAGE value="adding KivyTemplate, completing screen/button layout" />
     <MESSAGE value="adding KivyTemplate, completing screen/button layout, added working functions for velocity and acceleration sliders in RateScreen" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding KivyTemplate, completing screen/button layout, added working functions for velocity and acceleration sliders in RateScreen" />
+    <MESSAGE value="adding KivyTemplate, completing screen/button layout, added working functions for velocity and acceleration sliders in RateScreen, adding code for different set of odrive motors" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding KivyTemplate, completing screen/button layout, added working functions for velocity and acceleration sliders in RateScreen, adding code for different set of odrive motors" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ODrive_Kivy_GUI$main.coverage" NAME="main Coverage Results" MODIFIED="1738879661226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ODrive_Kivy_GUI$main.coverage" NAME="main Coverage Results" MODIFIED="1739220253528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
